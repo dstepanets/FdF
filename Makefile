@@ -10,17 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= fdf
-CC		= gcc
-FLAGS	= -g -Wall -Wextra -Werror
+NAME		= fdf
+CC			= gcc
+FLAGS		= -g -Wall -Wextra -Werror
 
-SRC_DIR	= ./src/
-OBJ_DIR	= ./obj/
-INC_DIR	= ./inc/
+SRC_DIR		= ./src/
+OBJ_DIR		= ./obj/
+INC_DIR		= ./inc/
 
-LIB_DIR	= ./libft/
-LIBFT 	= $(LIB_DIR)libft.a
-LIB_INC	= $(LIB_DIR)includes/
+LIB_DIR		= ./libft/
+LIBFT 		= $(LIB_DIR)libft.a
+LIB_INC		= $(LIB_DIR)includes/
+MLX_PATH	= -L  /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 SRC 	=	main.c \
 
@@ -29,7 +30,7 @@ OBJ 	= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -lft -L $(LIB_DIR) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -lft -L $(LIB_DIR) $(MLX_PATH) -o $(NAME)
 	@echo "\033[32m\033[100m\033[1mFdF executable compiled.\033[0m"
 
 $(OBJ): | $(OBJ_DIR)

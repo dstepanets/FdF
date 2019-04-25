@@ -18,18 +18,29 @@ void	error(char *msg)
 	exit(0);
 }
 
+void	init_window(void)
+{
+	void	*mlx;
+	void	*window;
+
+	mlx = mlx_init();
+	window = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
+	mlx_loop(mlx);
+}
+
 int		main(int argc, char const *argv[])
 {
 	int		fd;
 
 	if (argc != 2)
 	{
-		ft_printf("{yellow}{b}USAGE: ./fdf [input_file]{0}\n");
+		ft_printf("{yellow}{b}USAGE: ./fdf [file.fdf]{0}\n");
 		exit(0);
 	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error("ERROR: Can't open the file.");
+	init_window();
 
 	close(fd);
 	return (0);
