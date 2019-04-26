@@ -23,9 +23,11 @@ LIBFT 		= $(LIB_DIR)libft.a
 LIB_INC		= $(LIB_DIR)includes/
 MLX_PATH	= -L  /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
-SRC 	=	main.c \
+SRC 		=	main.c \
+				read.c \
+				clean.c
 
-OBJ 	= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
+OBJ 		= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 all: $(NAME)
 

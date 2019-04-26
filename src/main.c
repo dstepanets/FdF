@@ -12,36 +12,72 @@
 
 #include "../inc/fdf.h"
 
-void	error(char *msg)
+void			fdf_error(char *msg)
 {
 	ft_printf("{red}{b}%s{0}\n", msg);
+		printf("\n#################################################\n");		///
+		system("leaks -q fdf");		///
 	exit(0);
 }
 
-void	init_window(void)
+t_fdf			*init_fdf(void)
 {
-	void	*mlx;
-	void	*window;
+	t_fdf	*f;
 
-	mlx = mlx_init();
-	window = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
-	mlx_loop(mlx);
+	if(!(f = (t_fdf *)malloc(sizeof(t_fdf))))
+		return (NULL);
+	f->map = NULL;
+//	f->mlx = mlx_init();
+//	f->win = mlx_new_window(f->mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
+//	mlx_loop(f->mlx);
+	return (f);
 }
 
-int		main(int argc, char const *argv[])
+int				create_map(t_fdf *f)
 {
-	int		fd;
+	int		y;
+	
+	if (!(f->map = (t_dots **)malloc(sizeof(t_dots *) * f->h + 1)))
+		return (0);
+	y = 0;
+	while (y < f->h)
+	{
+		if (!(f->map[y] = (t_dots *)malloc(sizeof(t_dots) * f->w)))
+			return (0);
+		y++;
+	}
+	f->map[y] = NULL;
+	return (1);
+}
 
-	if (argc != 2)
+int				main(int ac, char const *av[])
+{
+	t_fdf	*f;
+	char	*file;
+
+	if (ac != 2)
 	{
 		ft_printf("{yellow}{b}USAGE: ./fdf [file.fdf]{0}\n");
 		exit(0);
 	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		error("ERROR: Can't open the file.");
-	init_window();
+	f = init_fdf();
+	file = read_file(av[1]);
+		printf("file:\n%s\n", file);	///
+	f->h = get_map_height(file);
+		printf("map_h: %d\n", f->h);	///
+	f->w = get_map_width(file);
+		printf("map_w: %d\n", f->w);	///
+	if (!f->h || !f->w)
+		fdf_error("ERROR: invalid map.");
+	if (!create_map(f))
+		fdf_error("ERROR on map creation.");
 
-	close(fd);
+		f->map[10][18].x = 777;
+		printf("xxxx:: %d\n", f->map[10][18].x);
+	del_map(f);
+	ft_memdel((void **)&file);
+	free(f);
+		printf("\n#################################################\n");		///
+		system("leaks -q fdf");		///
 	return (0);
 }
