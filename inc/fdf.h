@@ -38,11 +38,16 @@ typedef struct			s_fdf
 
 }						t_fdf;
 
-void			fdf_error(char *msg);
 char			*read_file(const char *av);
 int				get_map_height(char		*file);
 int				get_map_width(char		*file);
+int				create_map(t_fdf *f);
+int				populate_map(t_fdf *f, char *file);
 
+void			fdf_error(char *msg);
 void			del_map(t_fdf *f);
+
+///DEBUG
+void			print_map(t_fdf *f);
 
 #endif

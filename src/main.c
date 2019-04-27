@@ -33,23 +33,6 @@ t_fdf			*init_fdf(void)
 	return (f);
 }
 
-int				create_map(t_fdf *f)
-{
-	int		y;
-	
-	if (!(f->map = (t_dots **)malloc(sizeof(t_dots *) * f->h + 1)))
-		return (0);
-	y = 0;
-	while (y < f->h)
-	{
-		if (!(f->map[y] = (t_dots *)malloc(sizeof(t_dots) * f->w)))
-			return (0);
-		y++;
-	}
-	f->map[y] = NULL;
-	return (1);
-}
-
 int				main(int ac, char const *av[])
 {
 	t_fdf	*f;
@@ -71,9 +54,10 @@ int				main(int ac, char const *av[])
 		fdf_error("ERROR: invalid map.");
 	if (!create_map(f))
 		fdf_error("ERROR on map creation.");
+	if (!populate_map(f, file))
+		fdf_error("ERROR: invalid map.");
+			print_map(f);		///
 
-		f->map[10][18].x = 777;
-		printf("xxxx:: %d\n", f->map[10][18].x);
 	del_map(f);
 	ft_memdel((void **)&file);
 	free(f);

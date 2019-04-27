@@ -12,6 +12,59 @@
 
 #include "../inc/fdf.h"
 
+int				populate_map(t_fdf *f, char *file)
+{
+	int		i;
+	int		x;
+	int		y;
+
+	i = 0;
+	y = 0;
+	x = 0;
+	while (file[i])
+	{
+		if (file[i] == '-' || ft_isdigit(file[i]))
+		{
+			f->map[y][x].z = ft_atoi(&file[i]);
+			x++;
+			if (x > f->w)
+				return (0);
+			while (file[i] && (file[i] == '-' || ft_isdigit(file[i])))
+				i++;
+		}
+		if (!file[i] || file[i] == '\n')
+		{
+//				printf("y: %d, x: %d\n", y, x);	///
+			if (x != f->w)
+				return (0);
+			y++;
+			x = 0;
+		}
+		if (file[i])
+			i++;
+	}
+	if (y != f->h)
+		return (0);
+	return (1);
+}
+
+int				create_map(t_fdf *f)
+{
+	int		y;
+	
+	if (!(f->map = (t_dots **)malloc(sizeof(t_dots *) * f->h + 1)))
+		return (0);
+	y = 0;
+	while (y < f->h)
+	{
+		if (!(f->map[y] = (t_dots *)malloc(sizeof(t_dots) * f->w)))
+			return (0);
+		y++;
+	}
+	f->map[y] = NULL;
+	return (1);
+}
+
 int				get_map_width(char		*file)
 {
 	int		w;

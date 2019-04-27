@@ -25,7 +25,8 @@ MLX_PATH	= -L  /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 SRC 		=	main.c \
 				read.c \
-				clean.c
+				clean.c \
+				debug.c 			#####del
 
 OBJ 		= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
