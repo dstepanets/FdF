@@ -19,8 +19,6 @@ t_fdf			*init_fdf(void)
 	if(!(f = (t_fdf *)malloc(sizeof(t_fdf))))
 		return (NULL);
 	f->map = NULL;
-	if(!(f->ln = (t_line *)malloc(sizeof(t_line))))
-		return (NULL);
 	return (f);
 }
 
@@ -38,28 +36,44 @@ void			init_mlx(t_fdf *f)
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
 	mlx_hook(f->win, 2, 0, key_press, f);
 	mlx_hook(f->win, 17, 0, exit_fdf, f);
-		draw_line(f);
+		draw_line(f, f->map[0][0], f->map[5][1]);
 	mlx_loop(f->mlx);
 }
 
 
-void			draw_line(t_fdf *f)
+void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e)
 {
-	f->ln->x1 = 50;
-	f->ln->y1 = 50;
-	f->ln->x2 = WIN_H - 50;
-	f->ln->y2 = WIN_W - 50;
-	while (f->ln->x1 < f->ln->x2 && f->ln->y1 < f->ln->y2)
+	struct s_line		l;
+
+	l.x = s.x;
+	l.y = s.y;
+	l.dx = abs(s.x - e.x);
+	l.dy = abs(s.y - e.y);
+	l.p = 2 * l.dy - l.dx;
+	if (s.x > e.x)
 	{
-		mlx_pixel_put(f->mlx, f->win, f->ln->x1++, f->ln->y1++, BLUE);
+		l.x = e.x;
+		l.y = e.y;
+		l.t = s.x;
 	}
-	f->ln->x1 = 100;
-	f->ln->y1 = 50;
-	f->ln->x2 = WIN_H - 50;
-	f->ln->y2 = WIN_W - 50;
-	while (f->ln->x1 < f->ln->x2 && f->ln->y1 < f->ln->y2)
+	else
 	{
-		mlx_pixel_put(f->mlx, f->win, f->ln->x1++, f->ln->y1++, NAVY);
+		l.x = s.x;
+		l.y = s.y;
+		l.t = e.x;
+	}
+	mlx_pixel_put(f->mlx, f->win, l.x++, l.y, BLUE);
+	while (l.x <= l.t)
+	{
+		l.x++;
+		if (l.p < 0)
+			l.p = l.p + 2 * l.dy;
+		else
+		{
+			l.y++;
+			l.p = l.p + 2 * (l.dy - l.dx);
+		}
+		mlx_pixel_put(f->mlx, f->win, l.x, l.y, BLUE);
 	}
 }
 
@@ -84,14 +98,13 @@ int				main(int ac, char const *av[])
 		fdf_error("ERROR: invalid map.");
 	if (!create_map(f))
 		fdf_error("ERROR on map creation.");
-	if (!populate_map(f, file))
+	if (!map_z(f, file))
 		fdf_error("ERROR: invalid map.");
 			print_map(f);		///
 	ft_memdel((void **)&file);
+	map_xy(f);
 
 	init_mlx(f);
-
-
 
 
 		printf("\n#################################################\n");		///

@@ -34,7 +34,6 @@
 # define YELLOW		0xFFFF00
 
 
-
 typedef struct			s_dots
 {
 	int					x;
@@ -45,10 +44,12 @@ typedef struct			s_dots
 
 typedef struct			s_line
 {
-	int					x1;
-	int					y1;
-	int					x2;
-	int					y2;
+	int					x;
+	int					y;
+	int					dx;
+	int					dy;
+	int					p;
+	int					t;
 
 }						t_line;
 
@@ -59,16 +60,16 @@ typedef struct			s_fdf
 	struct s_dots		**map;
 	void				*mlx;
 	void				*win;
-	struct s_line		*ln;
 }						t_fdf;
 
 char			*read_file(const char *av);
 int				get_map_height(char		*file);
 int				get_map_width(char		*file);
 int				create_map(t_fdf *f);
-int				populate_map(t_fdf *f, char *file);
+int				map_z(t_fdf *f, char *file);
+void			map_xy(t_fdf *f);
 
-void			draw_line(t_fdf *f);
+void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e);
 
 int				exit_fdf(t_fdf *f);
 void			fdf_error(char *msg);

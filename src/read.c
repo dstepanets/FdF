@@ -12,7 +12,30 @@
 
 #include "../inc/fdf.h"
 
-int				populate_map(t_fdf *f, char *file)
+void			map_xy(t_fdf *f)
+{
+	int			y;
+	int			x;
+	int			xs;
+	int			ys;
+
+	xs = (WIN_W - 50) / f->w;
+	ys = (WIN_H - 50) / f->h;
+	y = 0;
+	while (y < f->h)
+	{
+		x = 0;
+		while (x < f->w)
+		{
+			f->map[y][x].x = (x + 1) * xs;
+			f->map[y][x].y = (y + 1) * ys;
+			x++;
+		}
+		y++;
+	}
+}
+
+int				map_z(t_fdf *f, char *file)
 {
 	int		i;
 	int		x;
