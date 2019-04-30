@@ -12,14 +12,6 @@
 
 #include "../inc/fdf.h"
 
-void			fdf_error(char *msg)
-{
-	ft_printf("{red}{b}%s{0}\n", msg);
-		printf("\n#################################################\n");		///
-		system("leaks -q fdf");		///
-	exit(0);
-}
-
 t_fdf			*init_fdf(void)
 {
 	t_fdf	*f;
@@ -27,10 +19,48 @@ t_fdf			*init_fdf(void)
 	if(!(f = (t_fdf *)malloc(sizeof(t_fdf))))
 		return (NULL);
 	f->map = NULL;
-//	f->mlx = mlx_init();
-//	f->win = mlx_new_window(f->mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
-//	mlx_loop(f->mlx);
+	if(!(f->ln = (t_line *)malloc(sizeof(t_line))))
+		return (NULL);
 	return (f);
+}
+
+int				key_press(int key, void *f)
+{
+	if (key == 53)
+		exit_fdf(f);
+	
+	return (0);
+}
+
+void			init_mlx(t_fdf *f)
+{
+	f->mlx = mlx_init();
+	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
+	mlx_hook(f->win, 2, 0, key_press, f);
+	mlx_hook(f->win, 17, 0, exit_fdf, f);
+		draw_line(f);
+	mlx_loop(f->mlx);
+}
+
+
+void			draw_line(t_fdf *f)
+{
+	f->ln->x1 = 50;
+	f->ln->y1 = 50;
+	f->ln->x2 = WIN_H - 50;
+	f->ln->y2 = WIN_W - 50;
+	while (f->ln->x1 < f->ln->x2 && f->ln->y1 < f->ln->y2)
+	{
+		mlx_pixel_put(f->mlx, f->win, f->ln->x1++, f->ln->y1++, BLUE);
+	}
+	f->ln->x1 = 100;
+	f->ln->y1 = 50;
+	f->ln->x2 = WIN_H - 50;
+	f->ln->y2 = WIN_W - 50;
+	while (f->ln->x1 < f->ln->x2 && f->ln->y1 < f->ln->y2)
+	{
+		mlx_pixel_put(f->mlx, f->win, f->ln->x1++, f->ln->y1++, NAVY);
+	}
 }
 
 int				main(int ac, char const *av[])
@@ -57,10 +87,13 @@ int				main(int ac, char const *av[])
 	if (!populate_map(f, file))
 		fdf_error("ERROR: invalid map.");
 			print_map(f);		///
-
-	del_map(f);
 	ft_memdel((void **)&file);
-	free(f);
+
+	init_mlx(f);
+
+
+
+
 		printf("\n#################################################\n");		///
 		system("leaks -q fdf");		///
 	return (0);

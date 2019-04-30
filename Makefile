@@ -21,7 +21,7 @@ INC_DIR		= ./inc/
 LIB_DIR		= ./libft/
 LIBFT 		= $(LIB_DIR)libft.a
 LIB_INC		= $(LIB_DIR)includes/
-MLX_PATH	= -L  /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+MLX_PATH	= -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 SRC 		=	main.c \
 				read.c \

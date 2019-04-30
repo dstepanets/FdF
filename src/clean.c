@@ -12,7 +12,25 @@
 
 #include "../inc/fdf.h"
 
-void		del_map(t_fdf *f)
+int			exit_fdf(t_fdf *f)
+{
+	del_map(f);
+	free(f);
+		printf("\n#################################################\n");		///
+		system("leaks -q fdf");		///
+	exit(0);
+	return (0);
+}
+
+void			fdf_error(char *msg)
+{
+	ft_printf("{red}{b}%s{0}\n", msg);
+		printf("\n#################################################\n");		///
+		system("leaks -q fdf");		///
+	exit(0);
+}
+
+void			del_map(t_fdf *f)
 {
 	int		y;
 
