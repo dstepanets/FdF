@@ -36,45 +36,9 @@ void			init_mlx(t_fdf *f)
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
 	mlx_hook(f->win, 2, 0, key_press, f);
 	mlx_hook(f->win, 17, 0, exit_fdf, f);
-		draw_line(f, f->map[0][0], f->map[5][1]);
+		
+		draw_grid(f);
 	mlx_loop(f->mlx);
-}
-
-
-void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e)
-{
-	struct s_line		l;
-
-	l.x = s.x;
-	l.y = s.y;
-	l.dx = abs(s.x - e.x);
-	l.dy = abs(s.y - e.y);
-	l.p = 2 * l.dy - l.dx;
-	if (s.x > e.x)
-	{
-		l.x = e.x;
-		l.y = e.y;
-		l.t = s.x;
-	}
-	else
-	{
-		l.x = s.x;
-		l.y = s.y;
-		l.t = e.x;
-	}
-	mlx_pixel_put(f->mlx, f->win, l.x++, l.y, BLUE);
-	while (l.x <= l.t)
-	{
-		l.x++;
-		if (l.p < 0)
-			l.p = l.p + 2 * l.dy;
-		else
-		{
-			l.y++;
-			l.p = l.p + 2 * (l.dy - l.dx);
-		}
-		mlx_pixel_put(f->mlx, f->win, l.x, l.y, BLUE);
-	}
 }
 
 int				main(int ac, char const *av[])
@@ -100,10 +64,9 @@ int				main(int ac, char const *av[])
 		fdf_error("ERROR on map creation.");
 	if (!map_z(f, file))
 		fdf_error("ERROR: invalid map.");
-			print_map(f);		///
 	ft_memdel((void **)&file);
 	map_xy(f);
-
+			print_map(f);		///
 	init_mlx(f);
 
 

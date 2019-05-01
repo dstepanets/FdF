@@ -48,8 +48,9 @@ typedef struct			s_line
 	int					y;
 	int					dx;
 	int					dy;
-	int					p;
-	int					t;
+	int					xi;
+	int					yi;
+	int					d;
 
 }						t_line;
 
@@ -62,6 +63,7 @@ typedef struct			s_fdf
 	void				*win;
 }						t_fdf;
 
+t_fdf			*init_fdf(void);
 char			*read_file(const char *av);
 int				get_map_height(char		*file);
 int				get_map_width(char		*file);
@@ -69,7 +71,13 @@ int				create_map(t_fdf *f);
 int				map_z(t_fdf *f, char *file);
 void			map_xy(t_fdf *f);
 
+void			init_mlx(t_fdf *f);
+int				key_press(int key, void *f);
+
+void			draw_grid(t_fdf *f);
 void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e);
+void			line_low(t_fdf *f, struct s_dots s, struct s_dots e);
+void			line_high(t_fdf *f, struct s_dots s, struct s_dots e);
 
 int				exit_fdf(t_fdf *f);
 void			fdf_error(char *msg);

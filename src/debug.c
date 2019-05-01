@@ -16,12 +16,13 @@ void			print_map(t_fdf *f)
 {
 	int y = 0, x;
 
+	printf("y.x.z:\n");
 	while (y < f->h)
 	{
 		x = 0;
 		while (x < f->w)
 		{
-			printf("%d  ", f->map[y][x].z);
+			printf("%d.%d.%d |", f->map[y][x].y, f->map[y][x].x, f->map[y][x].z);
 			x++;
 		}
 		printf("\n");
