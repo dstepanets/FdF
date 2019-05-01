@@ -27,7 +27,7 @@ void			line_low(t_fdf *f, struct s_dots s, struct s_dots e)
 	l.d = 2 * l.dy - l.dx;
 	l.y = s.y;
 	l.x = s.x;
-	while (l.x < e.x)
+	while (l.x <= e.x)
 	{
 		mlx_pixel_put(f->mlx, f->win, l.x, l.y, BLUE);
 		if (l.d > 0)
@@ -55,7 +55,7 @@ void			line_high(t_fdf *f, struct s_dots s, struct s_dots e)
 	l.d = 2 * l.dx - l.dy;
 	l.x = s.x;
 	l.y = s.y;
-	while (l.y < e.y)
+	while (l.y <= e.y)
 	{
 		mlx_pixel_put(f->mlx, f->win, l.x, l.y, BLUE);
 		if (l.d > 0)
@@ -81,7 +81,7 @@ void			draw_grid(t_fdf *f)
 	int		y;
 	int		x;
 
-		draw_line(f, f->map[0][0], f->map[10][3]);
+//		draw_line(f, f->map[0][0], f->map[1][10]);			///
 	y = 0;
 	while (y < f->h)
 	{

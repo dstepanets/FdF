@@ -18,26 +18,41 @@ t_fdf			*init_fdf(void)
 
 	if(!(f = (t_fdf *)malloc(sizeof(t_fdf))))
 		return (NULL);
+	f->h = 0;
+	f->w = 0;
 	f->map = NULL;
+	f->view = 0;
+	f->zoom = 0.7;
+	f->xs = 1;
+	f->ys = 1;
+	f->mlx = NULL;
+	f->win = NULL;
 	return (f);
 }
 
-int				key_press(int key, void *f)
+void			reset_fdf(t_fdf *f)
 {
-	if (key == 53)
-		exit_fdf(f);
-	
-	return (0);
+	mlx_clear_window(f->mlx, f->win);
+	f->xs = WIN_W / f->w * f->zoom;
+	f->ys = WIN_H / f->h * f->zoom;
 }
 
-void			init_mlx(t_fdf *f)
+void			fdf(t_fdf *f)
+{
+
+	view(f);
+	draw_grid(f);
+}
+
+void			run_mlx(t_fdf *f)
 {
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
+		
+		fdf(f);
+
 	mlx_hook(f->win, 2, 0, key_press, f);
 	mlx_hook(f->win, 17, 0, exit_fdf, f);
-		
-		draw_grid(f);
 	mlx_loop(f->mlx);
 }
 
@@ -65,9 +80,10 @@ int				main(int ac, char const *av[])
 	if (!map_z(f, file))
 		fdf_error("ERROR: invalid map.");
 	ft_memdel((void **)&file);
-	map_xy(f);
-			print_map(f);		///
-	init_mlx(f);
+	default_view(f);
+//			print_map(f);		///
+	to_isometric(f);
+	run_mlx(f);
 
 
 		printf("\n#################################################\n");		///
