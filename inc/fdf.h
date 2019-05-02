@@ -55,7 +55,7 @@ typedef struct			s_line
 }						t_line;
 
 /*
-** VIEW: 0 - def, 1 - iso;
+** VIEW: 0 - parallel, 1 - iso;
 */
 
 typedef struct			s_fdf
@@ -64,10 +64,12 @@ typedef struct			s_fdf
 	int					h;
 	struct s_dots		**map;
 
+	int					x0;
+	int					y0;
+	int					grid_step;
 	char				view;
 	double				zoom;
-	int					xs;
-	int					ys;
+
 
 	void				*mlx;
 	void				*win;
@@ -83,7 +85,11 @@ int				map_z(t_fdf *f, char *file);
 void			run_mlx(t_fdf *f);
 void			fdf(t_fdf *f);
 void			reset_fdf(t_fdf *f);
+
 int				key_press(int key, t_fdf *f);
+int				switch_view(int key, t_fdf *f);
+int				scroll(int key, t_fdf *f);
+int				zoom(int key, t_fdf *f);
 
 void			draw_grid(t_fdf *f);
 void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e);
@@ -91,7 +97,7 @@ void			line_low(t_fdf *f, struct s_dots s, struct s_dots e);
 void			line_high(t_fdf *f, struct s_dots s, struct s_dots e);
 
 void			view(t_fdf *f);
-void			default_view(t_fdf *f);
+void			parallel(t_fdf *f);
 void			to_isometric(t_fdf *f);
 void			iso(int *x, int *y, int z);
 

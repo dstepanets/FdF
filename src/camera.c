@@ -12,21 +12,26 @@
 
 #include "../inc/fdf.h"
 
-void			default_view(t_fdf *f)
+void			parallel(t_fdf *f)
 {
 	int			y;
 	int			x;
 
-	f->xs = WIN_W / f->w * f->zoom;
-	f->ys = WIN_H / f->h * f->zoom;
+	f->map[0][0].x = f->x0;
+	f->map[0][0].y = f->y0;
 	y = 0;
 	while (y < f->h)
 	{
 		x = 0;
 		while (x < f->w)
 		{
-			f->map[y][x].x = (x + 1) * f->xs;
-			f->map[y][x].y = (y + 1) * f->ys;
+			if (x == 0 && y == 0)
+			{
+				x++;
+				continue ;
+			}
+			f->map[y][x].x = f->map[0][0].x + (x * f->grid_step);
+			f->map[y][x].y = f->map[0][0].y + (y * f->grid_step);
 			x++;
 		}
 		y++;
@@ -64,8 +69,9 @@ void			to_isometric(t_fdf *f)
 
 void			view(t_fdf *f)
 {
+
 	if (f->view == 1)
 		to_isometric(f);
 	else
-		default_view(f);
+		parallel(f);
 }

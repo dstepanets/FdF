@@ -28,6 +28,7 @@ SRC 		=	main.c \
 				draw.c \
 				controls.c \
 				camera.c \
+				rotation.c \
 				clean.c \
 				debug.c 			#####del
 

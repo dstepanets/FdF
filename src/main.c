@@ -21,10 +21,12 @@ t_fdf			*init_fdf(void)
 	f->h = 0;
 	f->w = 0;
 	f->map = NULL;
+	f->x0 = 0;
+	f->y0 = 0;
+	f->grid_step = 1;
+	f->grid_step = 1;
 	f->view = 0;
 	f->zoom = 0.7;
-	f->xs = 1;
-	f->ys = 1;
 	f->mlx = NULL;
 	f->win = NULL;
 	return (f);
@@ -32,14 +34,22 @@ t_fdf			*init_fdf(void)
 
 void			reset_fdf(t_fdf *f)
 {
-	mlx_clear_window(f->mlx, f->win);
-	f->xs = WIN_W / f->w * f->zoom;
-	f->ys = WIN_H / f->h * f->zoom;
+	f->zoom = 0.7;
+	if (f->w > f->h)
+		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
+	else
+		f->grid_step = WIN_H / (f->h - 1) * f->zoom;
+	f->x0 = (WIN_W - ((f->w - 1) * f->grid_step)) / 2;
+	f->y0 = (WIN_H - ((f->h - 1) * f->grid_step)) / 2;
 }
 
 void			fdf(t_fdf *f)
 {
-
+	mlx_clear_window(f->mlx, f->win);
+	if (f->w > f->h)
+		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
+	else
+		f->grid_step = WIN_H / (f->h - 1) * f->zoom;
 	view(f);
 	draw_grid(f);
 }
@@ -49,6 +59,7 @@ void			run_mlx(t_fdf *f)
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
 		
+		reset_fdf(f);
 		fdf(f);
 
 	mlx_hook(f->win, 2, 0, key_press, f);
@@ -80,9 +91,8 @@ int				main(int ac, char const *av[])
 	if (!map_z(f, file))
 		fdf_error("ERROR: invalid map.");
 	ft_memdel((void **)&file);
-	default_view(f);
 //			print_map(f);		///
-	to_isometric(f);
+
 	run_mlx(f);
 
 
