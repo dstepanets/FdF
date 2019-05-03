@@ -27,6 +27,9 @@ t_fdf			*init_fdf(void)
 	f->grid_step = 1;
 	f->view = 0;
 	f->zoom = 0.7;
+	f->angle_x = 0.0;
+	f->angle_y = 0.0;
+	f->angle_z = 0.0;
 	f->mlx = NULL;
 	f->win = NULL;
 	return (f);
@@ -35,6 +38,9 @@ t_fdf			*init_fdf(void)
 void			reset_fdf(t_fdf *f)
 {
 	f->zoom = 0.7;
+	f->angle_x = 0.0;
+	f->angle_y = 0.0;
+	f->angle_z = 0.0;
 	if (f->w > f->h)
 		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
 	else

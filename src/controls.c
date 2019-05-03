@@ -25,6 +25,7 @@ int				key_press(int key, t_fdf *f)
 	switch_view(key, f);
 	scroll(key, f);
 	zoom(key, f);
+	rotate_controls(key, f);
 	return (0);
 }
 
@@ -80,6 +81,41 @@ int				zoom(int key, t_fdf *f)
 	else if (key == 24 || key == 69)
 	{
 		f->zoom += 0.02;
+		fdf(f);
+	}
+	return (0);
+}
+
+int				rotate_controls(int key, t_fdf *f)
+{
+	if (key == 13)
+	{
+		f->angle_x += + 0.05;
+		fdf(f);
+	}
+	else if (key == 1)
+	{
+		f->angle_x -= 0.05;
+		fdf(f);
+	}
+	else if (key == 2)
+	{
+		f->angle_y += 0.05;
+		fdf(f);
+	}
+	else if (key == 0)
+	{
+		f->angle_y -= 0.05;
+		fdf(f);
+	}
+	else if (key == 14)
+	{
+		f->angle_z += 0.05;
+		fdf(f);
+	}
+	else if (key == 12)
+	{
+		f->angle_z -= 0.05;
 		fdf(f);
 	}
 	return (0);

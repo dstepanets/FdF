@@ -74,4 +74,5 @@ void			view(t_fdf *f)
 		to_isometric(f);
 	else
 		parallel(f);
+	rotate(f);
 }

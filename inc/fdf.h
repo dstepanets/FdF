@@ -69,7 +69,9 @@ typedef struct			s_fdf
 	int					grid_step;
 	char				view;
 	double				zoom;
-
+	double				angle_x;
+	double				angle_y;
+	double				angle_z;
 
 	void				*mlx;
 	void				*win;
@@ -90,6 +92,7 @@ int				key_press(int key, t_fdf *f);
 int				switch_view(int key, t_fdf *f);
 int				scroll(int key, t_fdf *f);
 int				zoom(int key, t_fdf *f);
+int				rotate_controls(int key, t_fdf *f);
 
 void			draw_grid(t_fdf *f);
 void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e);
@@ -100,6 +103,11 @@ void			view(t_fdf *f);
 void			parallel(t_fdf *f);
 void			to_isometric(t_fdf *f);
 void			iso(int *x, int *y, int z);
+
+void			rotate(t_fdf *f);
+void			rotate_x(t_fdf *f, int *y, int *z);
+void			rotate_y(t_fdf *f, int *x, int *z);
+void			rotate_z(t_fdf *f, int *x, int *y);
 
 int				exit_fdf(t_fdf *f);
 void			fdf_error(char *msg);
