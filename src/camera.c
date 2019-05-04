@@ -12,7 +12,7 @@
 
 #include "../inc/fdf.h"
 
-void			parallel(t_fdf *f)
+void			default_view(t_fdf *f)
 {
 	int			y;
 	int			x;
@@ -69,10 +69,12 @@ void			to_isometric(t_fdf *f)
 
 void			view(t_fdf *f)
 {
-
+	if (f->w > f->h)
+		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
+	else
+		f->grid_step = WIN_H / (f->h - 1) * f->zoom;
+	default_view(f);
 	if (f->view == 1)
 		to_isometric(f);
-	else
-		parallel(f);
 	rotate(f);
 }

@@ -15,6 +15,8 @@
 int			exit_fdf(t_fdf *f)
 {
 	del_map(f);
+	mlx_destroy_window(f->mlx, f->win);
+	mlx_destroy_image(f->mlx, f->img);
 	free(f);
 		printf("\n#################################################\n");		///
 		system("leaks -q fdf");		///

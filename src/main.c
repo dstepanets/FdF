@@ -21,6 +21,8 @@ t_fdf			*init_fdf(void)
 	f->h = 0;
 	f->w = 0;
 	f->map = NULL;
+	f->img = NULL;
+	f->imarr = NULL;
 	f->x0 = 0;
 	f->y0 = 0;
 	f->grid_step = 1;
@@ -51,19 +53,22 @@ void			reset_fdf(t_fdf *f)
 
 void			fdf(t_fdf *f)
 {
+	if (f->img)
+		mlx_destroy_image(f->mlx, f->img);
 	mlx_clear_window(f->mlx, f->win);
-	if (f->w > f->h)
-		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
-	else
-		f->grid_step = WIN_H / (f->h - 1) * f->zoom;
+	f->img = mlx_new_image(f->mlx, WIN_W, WIN_H);
+	f->imarr = (int *)mlx_get_data_addr(f->img, &f->bpp, &f->ln_size, &f->endian);
+
 	view(f);
 	draw_grid(f);
+	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
 }
 
 void			run_mlx(t_fdf *f)
 {
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
+
 		
 		reset_fdf(f);
 		fdf(f);
@@ -100,8 +105,6 @@ int				main(int ac, char const *av[])
 //			print_map(f);		///
 
 	run_mlx(f);
-
-
 		printf("\n#################################################\n");		///
 		system("leaks -q fdf");		///
 	return (0);

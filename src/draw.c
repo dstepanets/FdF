@@ -12,6 +12,20 @@
 
 #include "../inc/fdf.h"
 
+void			put_pixel(t_fdf *f, int x, int y, int color)
+{
+	int		i;
+
+	if (x > 0 && x < WIN_W && y > 0 && y < WIN_H)
+	{
+//		i = (x * f->bpp / 8) + (y * f->ln_size);
+		i = y * WIN_W + x;
+		f->imarr[i++] = color;
+		f->imarr[i++] = color >> 8;
+		f->imarr[i] = color >> 16;
+	}
+}
+
 void			line_low(t_fdf *f, struct s_dots s, struct s_dots e)
 {
 	struct s_line		l;
@@ -29,7 +43,7 @@ void			line_low(t_fdf *f, struct s_dots s, struct s_dots e)
 	l.x = s.x;
 	while (l.x <= e.x)
 	{
-		mlx_pixel_put(f->mlx, f->win, l.x, l.y, BLUE);
+		put_pixel(f, l.x, l.y, BLUE);
 		if (l.d > 0)
 		{
 			l.y = l.y + l.yi;
@@ -57,7 +71,7 @@ void			line_high(t_fdf *f, struct s_dots s, struct s_dots e)
 	l.y = s.y;
 	while (l.y <= e.y)
 	{
-		mlx_pixel_put(f->mlx, f->win, l.x, l.y, BLUE);
+		put_pixel(f, l.x, l.y, BLUE);
 		if (l.d > 0)
 		{
 			l.x += l.xi;
