@@ -19,7 +19,7 @@ int				key_press(int key, t_fdf *f)
 	else if (key == 49)
 	{
 		reset_fdf(f);
-		view(f);
+//		view(f);
 		fdf(f);
 	}
 	switch_view(key, f);
@@ -34,13 +34,13 @@ int				switch_view(int key, t_fdf *f)
 	if (key == 18)
 	{
 		f->view = 0;
-		reset_fdf(f);
+//		reset_fdf(f);
 		fdf(f);
 	}
 	else if (key == 19)
 	{
 		f->view = 1;
-		reset_fdf(f);
+//		reset_fdf(f);
 		fdf(f);
 	}
 	return (0);
@@ -50,22 +50,22 @@ int				scroll(int key, t_fdf *f)
 {
 	if (key == 126)
 	{
-		f->y0 -= 8;
+		f->ym -= 8;
 		fdf(f);
 	}
 	else if (key == 125)
 	{
-		f->y0 += 8;
+		f->ym += 8;
 		fdf(f);
 	}
 	else if (key == 123)
 	{
-		f->x0 -= 8;
+		f->xm -= 8;
 		fdf(f);
 	}
 	else if (key == 124)
 	{
-		f->x0 += 8;
+		f->xm += 8;
 		fdf(f);
 	}
 	return (0);

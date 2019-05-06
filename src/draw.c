@@ -18,11 +18,12 @@ void			put_pixel(t_fdf *f, int x, int y, int color)
 
 	if (x > 0 && x < WIN_W && y > 0 && y < WIN_H)
 	{
-//		i = (x * f->bpp / 8) + (y * f->ln_size);
+	//		i = (x * f->bpp / 8) + (y * f->ln_size);
 		i = y * WIN_W + x;
-		f->imarr[i++] = color;
-		f->imarr[i++] = color >> 8;
-		f->imarr[i] = color >> 16;
+		f->imarr[i] = color;
+	//		f->imarr[i++] = color;
+	//		f->imarr[i++] = color >> 8;
+	//		f->imarr[i] = color >> 16;
 	}
 }
 
@@ -95,7 +96,6 @@ void			draw_grid(t_fdf *f)
 	int		y;
 	int		x;
 
-//		draw_line(f, f->map[0][0], f->map[1][10]);			///
 	y = 0;
 	while (y < f->h)
 	{

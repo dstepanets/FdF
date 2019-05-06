@@ -23,8 +23,8 @@ t_fdf			*init_fdf(void)
 	f->map = NULL;
 	f->img = NULL;
 	f->imarr = NULL;
-	f->x0 = 0;
-	f->y0 = 0;
+	f->xm = 0;
+	f->ym = 0;
 	f->grid_step = 1;
 	f->grid_step = 1;
 	f->view = 0;
@@ -47,17 +47,15 @@ void			reset_fdf(t_fdf *f)
 		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
 	else
 		f->grid_step = WIN_H / (f->h - 1) * f->zoom;
-	f->x0 = (WIN_W - ((f->w - 1) * f->grid_step)) / 2;
-	f->y0 = (WIN_H - ((f->h - 1) * f->grid_step)) / 2;
+	f->xm = (WIN_W - ((f->w - 1) * f->grid_step)) / 2;
+	f->ym = (WIN_H - ((f->h - 1) * f->grid_step)) / 2;
 }
 
 void			fdf(t_fdf *f)
 {
-	if (f->img)
-		mlx_destroy_image(f->mlx, f->img);
+	ft_bzero(f->imarr, WIN_W * WIN_H * sizeof(int));
 	mlx_clear_window(f->mlx, f->win);
-	f->img = mlx_new_image(f->mlx, WIN_W, WIN_H);
-	f->imarr = (int *)mlx_get_data_addr(f->img, &f->bpp, &f->ln_size, &f->endian);
+
 
 	view(f);
 	draw_grid(f);
@@ -68,9 +66,9 @@ void			run_mlx(t_fdf *f)
 {
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
-
-		
-		reset_fdf(f);
+	f->img = mlx_new_image(f->mlx, WIN_W, WIN_H);
+	f->imarr = (int *)mlx_get_data_addr(f->img, &f->bpp, &f->ln_size, &f->endian);
+//		reset_fdf(f);
 		fdf(f);
 
 	mlx_hook(f->win, 2, 0, key_press, f);
@@ -103,8 +101,10 @@ int				main(int ac, char const *av[])
 		fdf_error("ERROR: invalid map.");
 	ft_memdel((void **)&file);
 //			print_map(f);		///
-
+	reset_fdf(f);
+	default_view(f);
 	run_mlx(f);
+
 		printf("\n#################################################\n");		///
 		system("leaks -q fdf");		///
 	return (0);

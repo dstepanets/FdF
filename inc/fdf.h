@@ -55,6 +55,7 @@ typedef struct			s_line
 
 /*
 ** VIEW: 0 - default, 1 - iso;
+** xm, ym - move offset
 */
 
 typedef struct			s_fdf
@@ -67,8 +68,8 @@ typedef struct			s_fdf
 	int					bpp;		//
 	int					ln_size;	//
 	int					endian;		//
-	int					x0;
-	int					y0;
+	int					xm;
+	int					ym;
 	int					grid_step;
 	char				view;
 	double				zoom;
@@ -106,7 +107,7 @@ void			line_high(t_fdf *f, struct s_dots s, struct s_dots e);
 void			view(t_fdf *f);
 void			default_view(t_fdf *f);
 void			to_isometric(t_fdf *f);
-void			iso(int *x, int *y, int z);
+void			iso(t_fdf *f, int *x, int *y, int z);
 
 void			rotate(t_fdf *f);
 void			rotate_x(t_fdf *f, int *y, int *z);
