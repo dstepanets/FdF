@@ -17,8 +17,6 @@ void			default_view(t_fdf *f)
 	int			y;
 	int			x;
 	
-//	f->map[0][0].x = f->x0;
-//	f->map[0][0].y = f->y0;
 	y = 0;
 	while (y < f->h)
 	{
@@ -27,7 +25,6 @@ void			default_view(t_fdf *f)
 		{
 			f->map[y][x].x = (x - f->w / 2) * f->zoom;
 			f->map[y][x].y = (y - f->h / 2) * f->zoom;
-//			f->map[y][x].z = f->map[y][x].z;		//zoom
 			f->map[y][x].x += f->x0;
 			f->map[y][x].y += f->y0;
 			x++;
@@ -63,7 +60,7 @@ void			to_isometric(t_fdf *f)
 		{
 			f->map[y][x].x = (x - f->w / 2) * f->zoom;
 			f->map[y][x].y = (y - f->h / 2) * f->zoom;
-			iso(f, &f->map[y][x].x, &f->map[y][x].y, f->map[y][x].z);
+			iso(f, &f->map[y][x].x, &f->map[y][x].y, (f->map[y][x].z * f->zoom));
 			f->map[y][x].x += f->x0;
 			f->map[y][x].y += f->y0;
 			x++;
@@ -74,6 +71,7 @@ void			to_isometric(t_fdf *f)
 
 void			view(t_fdf *f)
 {
+//		printf("zoom: %f\n", f->zoom);		///
 	if (f->view == 0)
 		default_view(f);
 	else if (f->view == 1)

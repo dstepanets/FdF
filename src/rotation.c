@@ -56,14 +56,14 @@ void			rotate(t_fdf *f)
 		x = 0;
 		while (x < f->w)
 		{
-			f->map[y][x].x = (x - f->w / 2) * f->zoom;
-			f->map[y][x].y = (y - f->h / 2) * f->zoom;
-			f->map[y][x].z = f->map[y][x].z * f->zoom;
+//			f->map[y][x].x = (x - f->w / 2) * f->zoom;
+//			f->map[y][x].y = (y - f->h / 2) * f->zoom;
+//			f->map[y][x].z = f->map[y][x].z * f->zoom;
 			rotate_x(f, &f->map[y][x].y, &f->map[y][x].z);
 			rotate_y(f, &f->map[y][x].x, &f->map[y][x].z);
 			rotate_z(f, &f->map[y][x].x, &f->map[y][x].y);
-			f->map[y][x].x += f->x0;
-			f->map[y][x].y += f->y0;
+//			f->map[y][x].x += f->x0;
+//			f->map[y][x].y += f->y0;
 			x++;
 		}
 		y++;

@@ -23,10 +23,10 @@ t_fdf			*init_fdf(void)
 	f->map = NULL;
 	f->img = NULL;
 	f->imarr = NULL;
-	f->x0 = 0;
-	f->y0 = 0;
+	f->x0 = WIN_W / 2;
+	f->y0 = WIN_H / 2;
 	f->view = 0;
-	f->zoom = 1;
+	f->zoom = 1.0;
 	f->angle_x = 0;
 	f->angle_y = 0;
 	f->angle_z = 0;
@@ -37,27 +37,19 @@ t_fdf			*init_fdf(void)
 
 void			reset_fdf(t_fdf *f)
 {
-	f->zoom = 1.0;
-	f->angle_x = 0;
-	f->angle_y = 0;
-	f->angle_z = 0;
-	f->x0 = WIN_W / 2;
-	f->y0 = WIN_H / 2;
+	
 	if (f->w > f->h)
 		f->zoom = WIN_W / 2 / (f->w - 1);
 	else
 		f->zoom = WIN_H / 2 / (f->h - 1);
 	if (f->zoom < 1)
 		f->zoom = 1;
-//	f->x0 = (WIN_W - ((f->w - 1) * f->zoom)) / 2;
-//	f->y0 = (WIN_H - ((f->h - 1) * f->zoom)) / 2;
 }
 
 void			fdf(t_fdf *f)
 {
 	ft_bzero(f->imarr, WIN_W * WIN_H * sizeof(int));
 	mlx_clear_window(f->mlx, f->win);
-
 
 	view(f);
 	draw_grid(f);
@@ -104,7 +96,7 @@ int				main(int ac, char const *av[])
 	ft_memdel((void **)&file);
 //			print_map(f);		///
 	reset_fdf(f);
-	default_view(f);
+//	default_view(f);
 	run_mlx(f);
 
 		printf("\n#################################################\n");		///

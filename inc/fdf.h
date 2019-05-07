@@ -56,7 +56,6 @@ typedef struct			s_line
 
 /*
 ** VIEW: 0 - default, 1 - iso;
-** xm, ym - move offset
 */
 
 typedef struct			s_fdf
