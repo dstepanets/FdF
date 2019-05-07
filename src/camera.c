@@ -17,18 +17,19 @@ void			default_view(t_fdf *f)
 	int			y;
 	int			x;
 	
-	f->map[0][0].x = f->xm;
-	f->map[0][0].y = f->ym;
+//	f->map[0][0].x = f->x0;
+//	f->map[0][0].y = f->y0;
 	y = 0;
 	while (y < f->h)
 	{
 		x = 0;
 		while (x < f->w)
 		{
-			f->map[y][x].x = (x * f->grid_step);
-			f->map[y][x].y = (y * f->grid_step);
-			f->map[y][x].x += f->xm;
-			f->map[y][x].y += f->ym;
+			f->map[y][x].x = (x - f->w / 2) * f->zoom;
+			f->map[y][x].y = (y - f->h / 2) * f->zoom;
+//			f->map[y][x].z = f->map[y][x].z;		//zoom
+			f->map[y][x].x += f->x0;
+			f->map[y][x].y += f->y0;
 			x++;
 		}
 		y++;
@@ -60,7 +61,11 @@ void			to_isometric(t_fdf *f)
 		x = 0;
 		while (x < f->w)
 		{
-			iso(f, &f->map[y][x].x, &f->map[y][x].y, f->map[y][x].z * f->zoom);
+			f->map[y][x].x = (x - f->w / 2) * f->zoom;
+			f->map[y][x].y = (y - f->h / 2) * f->zoom;
+			iso(f, &f->map[y][x].x, &f->map[y][x].y, f->map[y][x].z);
+			f->map[y][x].x += f->x0;
+			f->map[y][x].y += f->y0;
 			x++;
 		}
 		y++;
@@ -69,13 +74,9 @@ void			to_isometric(t_fdf *f)
 
 void			view(t_fdf *f)
 {
-	if (f->w > f->h)
-		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
-	else
-		f->grid_step = WIN_H / (f->h - 1) * f->zoom;
-//	if (f->view == 0)
+	if (f->view == 0)
 		default_view(f);
-	if (f->view == 1)
+	else if (f->view == 1)
 		to_isometric(f);
-	rotate(f);
+//	rotate(f);
 }

@@ -19,7 +19,7 @@ void			rotate_x(t_fdf *f, int *y, int *z)
 
 	old_y = *y;
 	old_z = *z;
-	*y = old_y * cos(f->angle_x) + *z * sin(f->angle_x);
+	*y = old_y * cos(PI / 180 * f->angle_x) + *z * sin(PI / 180 * f->angle_x);
 	*z = -old_y * sin(f->angle_x) + *z * cos(f->angle_x);
 }
 
@@ -30,8 +30,8 @@ void			rotate_y(t_fdf *f, int *x, int *z)
 
 	old_x = *x;
 	old_z = *z;
-	*x = old_x * cos(f->angle_y) + *z * sin(f->angle_y);
-	*z = -old_x * sin(f->angle_y) + *z * cos(f->angle_y);
+	*x = old_x * cos(PI / 180 * f->angle_y) + *z * sin(PI / 180 * f->angle_y);
+	*z = -old_x * sin(PI / 180 * f->angle_y) + *z * cos(PI / 180 * f->angle_y);
 }
 
 void			rotate_z(t_fdf *f, int *x, int *y)
@@ -41,8 +41,8 @@ void			rotate_z(t_fdf *f, int *x, int *y)
 
 	old_x = *x;
 	old_y = *y;
-	*x = old_x * cos(f->angle_z) - old_y * sin(f->angle_z);
-	*y = old_x * sin(f->angle_z) + old_y * cos(f->angle_z);
+	*x = old_x * cos(PI / 180 * f->angle_z) - old_y * sin(PI / 180 * f->angle_z);
+	*y = old_x * sin(PI / 180 * f->angle_z) + old_y * cos(PI / 180 * f->angle_z);
 }
 
 void			rotate(t_fdf *f)
@@ -56,9 +56,14 @@ void			rotate(t_fdf *f)
 		x = 0;
 		while (x < f->w)
 		{
+			f->map[y][x].x = (x - f->w / 2) * f->zoom;
+			f->map[y][x].y = (y - f->h / 2) * f->zoom;
+			f->map[y][x].z = f->map[y][x].z * f->zoom;
 			rotate_x(f, &f->map[y][x].y, &f->map[y][x].z);
 			rotate_y(f, &f->map[y][x].x, &f->map[y][x].z);
 			rotate_z(f, &f->map[y][x].x, &f->map[y][x].y);
+			f->map[y][x].x += f->x0;
+			f->map[y][x].y += f->y0;
 			x++;
 		}
 		y++;

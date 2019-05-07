@@ -50,22 +50,22 @@ int				scroll(int key, t_fdf *f)
 {
 	if (key == 126)
 	{
-		f->ym -= 8;
+		f->y0 -= 8;
 		fdf(f);
 	}
 	else if (key == 125)
 	{
-		f->ym += 8;
+		f->y0 += 8;
 		fdf(f);
 	}
 	else if (key == 123)
 	{
-		f->xm -= 8;
+		f->x0 -= 8;
 		fdf(f);
 	}
 	else if (key == 124)
 	{
-		f->xm += 8;
+		f->x0 += 8;
 		fdf(f);
 	}
 	return (0);
@@ -75,12 +75,12 @@ int				zoom(int key, t_fdf *f)
 {
 	if (key == 27 || key == 78)
 	{
-		(f->zoom > 0.1) ? f->zoom -= 0.02 : 0;
+		(f->zoom > 1) ? f->zoom-- : 0;
 		fdf(f);
 	}
 	else if (key == 24 || key == 69)
 	{
-		f->zoom += 0.02;
+		f->zoom++;
 		fdf(f);
 	}
 	return (0);
@@ -90,32 +90,32 @@ int				rotate_controls(int key, t_fdf *f)
 {
 	if (key == 13)
 	{
-		f->angle_x += + 0.05;
+		f->angle_x += + 2;
 		fdf(f);
 	}
 	else if (key == 1)
 	{
-		f->angle_x -= 0.05;
+		f->angle_x -= 2;
 		fdf(f);
 	}
 	else if (key == 2)
 	{
-		f->angle_y += 0.05;
+		f->angle_y += 2;
 		fdf(f);
 	}
 	else if (key == 0)
 	{
-		f->angle_y -= 0.05;
+		f->angle_y -= 2;
 		fdf(f);
 	}
 	else if (key == 14)
 	{
-		f->angle_z += 0.05;
+		f->angle_z += 2;
 		fdf(f);
 	}
 	else if (key == 12)
 	{
-		f->angle_z -= 0.05;
+		f->angle_z -= 2;
 		fdf(f);
 	}
 	return (0);

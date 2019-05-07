@@ -23,15 +23,13 @@ t_fdf			*init_fdf(void)
 	f->map = NULL;
 	f->img = NULL;
 	f->imarr = NULL;
-	f->xm = 0;
-	f->ym = 0;
-	f->grid_step = 1;
-	f->grid_step = 1;
+	f->x0 = 0;
+	f->y0 = 0;
 	f->view = 0;
-	f->zoom = 0.7;
-	f->angle_x = 0.0;
-	f->angle_y = 0.0;
-	f->angle_z = 0.0;
+	f->zoom = 1;
+	f->angle_x = 0;
+	f->angle_y = 0;
+	f->angle_z = 0;
 	f->mlx = NULL;
 	f->win = NULL;
 	return (f);
@@ -39,16 +37,20 @@ t_fdf			*init_fdf(void)
 
 void			reset_fdf(t_fdf *f)
 {
-	f->zoom = 0.7;
-	f->angle_x = 0.0;
-	f->angle_y = 0.0;
-	f->angle_z = 0.0;
+	f->zoom = 1.0;
+	f->angle_x = 0;
+	f->angle_y = 0;
+	f->angle_z = 0;
+	f->x0 = WIN_W / 2;
+	f->y0 = WIN_H / 2;
 	if (f->w > f->h)
-		f->grid_step = WIN_W / (f->w - 1) * f->zoom;
+		f->zoom = WIN_W / 2 / (f->w - 1);
 	else
-		f->grid_step = WIN_H / (f->h - 1) * f->zoom;
-	f->xm = (WIN_W - ((f->w - 1) * f->grid_step)) / 2;
-	f->ym = (WIN_H - ((f->h - 1) * f->grid_step)) / 2;
+		f->zoom = WIN_H / 2 / (f->h - 1);
+	if (f->zoom < 1)
+		f->zoom = 1;
+//	f->x0 = (WIN_W - ((f->w - 1) * f->zoom)) / 2;
+//	f->y0 = (WIN_H - ((f->h - 1) * f->zoom)) / 2;
 }
 
 void			fdf(t_fdf *f)

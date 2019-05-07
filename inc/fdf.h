@@ -33,6 +33,7 @@
 # define NAVY		0x000080
 # define YELLOW		0xFFFF00
 
+# define PI			3.1416
 
 typedef struct			s_dots
 {
@@ -68,14 +69,13 @@ typedef struct			s_fdf
 	int					bpp;		//
 	int					ln_size;	//
 	int					endian;		//
-	int					xm;
-	int					ym;
-	int					grid_step;
+	int					x0;
+	int					y0;
 	char				view;
 	double				zoom;
-	double				angle_x;
-	double				angle_y;
-	double				angle_z;
+	int					angle_x;
+	int					angle_y;
+	int					angle_z;
 
 	void				*mlx;
 	void				*win;
