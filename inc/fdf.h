@@ -55,7 +55,7 @@ typedef struct			s_line
 }						t_line;
 
 /*
-** VIEW: 0 - default, 1 - iso;
+** VIEW: 0 - default, 1 - iso, 2 - rotation;
 */
 
 typedef struct			s_fdf
@@ -70,6 +70,8 @@ typedef struct			s_fdf
 	int					endian;		//
 	int					x0;
 	int					y0;
+	int					max_z;
+	int					min_z;
 	char				view;
 	double				zoom;
 	int					angle_x;
@@ -109,8 +111,8 @@ void			to_isometric(t_fdf *f);
 void			iso(t_fdf *f, int *x, int *y, int z);
 
 void			rotate(t_fdf *f);
-void			rotate_x(t_fdf *f, int *y, int *z);
-void			rotate_y(t_fdf *f, int *x, int *z);
+void			rotate_x(t_fdf *f, int *y, int z);
+void			rotate_y(t_fdf *f, int *x, int z);
 void			rotate_z(t_fdf *f, int *x, int *y);
 
 int				exit_fdf(t_fdf *f);

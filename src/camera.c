@@ -71,10 +71,28 @@ void			to_isometric(t_fdf *f)
 
 void			view(t_fdf *f)
 {
-//		printf("zoom: %f\n", f->zoom);		///
+	if (f->view == 0)
+	{
+		to_isometric(f);
+		return ;
+	}
+//		default_view(f);
+	else if (f->view == 1)
+	{
+		f->angle_x = -30;
+		f->angle_y = -30;
+		f->angle_z = 30;
+	}
+	rotate(f);
+//	else if (f->view == 2)
+
+}
+/*
+
 	if (f->view == 0)
 		default_view(f);
 	else if (f->view == 1)
 		to_isometric(f);
-//	rotate(f);
-}
+	else
+		rotate(f);
+*/

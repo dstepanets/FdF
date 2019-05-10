@@ -26,6 +26,10 @@ int				map_z(t_fdf *f, char *file)
 		if (file[i] == '-' || ft_isdigit(file[i]))
 		{
 			f->map[y][x].z = ft_atoi(&file[i]);
+			if (f->map[y][x].z > f->max_z)
+				f->max_z = f->map[y][x].z;
+			else if (f->map[y][x].z < f->min_z)
+				f->min_z = f->map[y][x].z;
 			x++;
 			if (x > f->w)
 				return (0);

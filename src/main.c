@@ -25,6 +25,8 @@ t_fdf			*init_fdf(void)
 	f->imarr = NULL;
 	f->x0 = WIN_W / 2;
 	f->y0 = WIN_H / 2;
+	f->max_z = 0;
+	f->min_z = 0;
 	f->view = 0;
 	f->zoom = 1.0;
 	f->angle_x = 0;
