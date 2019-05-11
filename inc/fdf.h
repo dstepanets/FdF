@@ -65,19 +65,20 @@ typedef struct			s_fdf
 	struct s_dots		**map;
 	int					*img;
 	int					*imarr;
-	int					bpp;		//
-	int					ln_size;	//
-	int					endian;		//
 	int					x0;
 	int					y0;
-	int					max_z;
-	int					min_z;
 	char				view;
 	double				zoom;
 	int					angle_x;
 	int					angle_y;
 	int					angle_z;
+	double				z_scale;					
+	int					max_z;
+	int					min_z;
 
+	int				bpp;		//
+	int				ln_size;	//
+	int				endian;		//
 	void				*mlx;
 	void				*win;
 }						t_fdf;
@@ -91,13 +92,14 @@ int				map_z(t_fdf *f, char *file);
 
 void			run_mlx(t_fdf *f);
 void			fdf(t_fdf *f);
-void			reset_fdf(t_fdf *f);
+void			reset_view(t_fdf *f);
 
 int				key_press(int key, t_fdf *f);
 int				switch_view(int key, t_fdf *f);
 int				scroll(int key, t_fdf *f);
 int				zoom(int key, t_fdf *f);
 int				rotate_controls(int key, t_fdf *f);
+int				z_scale(int key, t_fdf *f);
 
 void			put_pixel(t_fdf *f, int x, int y, int color);
 void			draw_grid(t_fdf *f);
@@ -106,13 +108,9 @@ void			line_low(t_fdf *f, struct s_dots s, struct s_dots e);
 void			line_high(t_fdf *f, struct s_dots s, struct s_dots e);
 
 void			view(t_fdf *f);
-void			default_view(t_fdf *f);
-void			to_isometric(t_fdf *f);
-void			iso(t_fdf *f, int *x, int *y, int z);
-
 void			rotate(t_fdf *f);
-void			rotate_x(t_fdf *f, int *y, int z);
-void			rotate_y(t_fdf *f, int *x, int z);
+void			rotate_x(t_fdf *f, int *y, double *z);
+void			rotate_y(t_fdf *f, int *x, double *z);
 void			rotate_z(t_fdf *f, int *x, int *y);
 
 int				exit_fdf(t_fdf *f);

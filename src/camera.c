@@ -12,79 +12,33 @@
 
 #include "../inc/fdf.h"
 
-void			default_view(t_fdf *f)
+void			reset_view(t_fdf *f)
 {
-	int			y;
-	int			x;
-	
-	y = 0;
-	while (y < f->h)
-	{
-		x = 0;
-		while (x < f->w)
-		{
-			f->map[y][x].x = (x - f->w / 2) * f->zoom;
-			f->map[y][x].y = (y - f->h / 2) * f->zoom;
-			f->map[y][x].x += f->x0;
-			f->map[y][x].y += f->y0;
-			x++;
-		}
-		y++;
-	}
-}
-
-void			iso(t_fdf *f, int *x, int *y, int z)
-{
-	int		old_x;
-	int 	old_y;
-
-	old_x = *x;
-	old_y = *y;
-	*x = (old_x - old_y) * cos(0.523599);
-	*y = (old_x + old_y -z) * sin(0.523599);
-	(void)f;	///
-//	*x += f->xm;
-//	*y += f->ym;
-}
-
-void			to_isometric(t_fdf *f)
-{
-	int		y;
-	int		x;
-	
-	y = 0;
-	while (y < f->h)
-	{
-		x = 0;
-		while (x < f->w)
-		{
-			f->map[y][x].x = (x - f->w / 2) * f->zoom;
-			f->map[y][x].y = (y - f->h / 2) * f->zoom;
-			iso(f, &f->map[y][x].x, &f->map[y][x].y, (f->map[y][x].z * f->zoom));
-			f->map[y][x].x += f->x0;
-			f->map[y][x].y += f->y0;
-			x++;
-		}
-		y++;
-	}
+	if (f->w > f->h)
+		f->zoom = WIN_W / 2 / (f->w - 1);
+	else
+		f->zoom = WIN_H / 2 / (f->h - 1);
+	if (f->zoom < 1)
+		f->zoom = 1;
+	f->z_scale = 1.0;
+	f->view = 0;
 }
 
 void			view(t_fdf *f)
 {
 	if (f->view == 0)
 	{
-		to_isometric(f);
-		return ;
-	}
-//		default_view(f);
-	else if (f->view == 1)
-	{
 		f->angle_x = -30;
 		f->angle_y = -30;
 		f->angle_z = 30;
 	}
+	else if (f->view == 1)
+	{
+		f->angle_x = -45;
+		f->angle_y = 0;
+		f->angle_z = 0;
+	}
 	rotate(f);
-//	else if (f->view == 2)
 
 }
 /*

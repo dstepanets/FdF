@@ -12,44 +12,48 @@
 
 #include "../inc/fdf.h"
 
-void			rotate_x(t_fdf *f, int *y, int z)
+void			rotate_x(t_fdf *f, int *y, double *z)
 {
-	int		old_y;
-	int		old_z;
+	double		old_y;
+	double		new_y;
 
 	old_y = *y;
-	old_z = z;
-	*y = old_y * cos(PI / 180 * f->angle_x) + z * sin(PI / 180 * f->angle_x);
-	z = -old_y * sin(f->angle_x) + z * cos(f->angle_x);
+	new_y = old_y * cos(PI / 180 * f->angle_x) + *z * sin(PI / 180 * f->angle_x);
+	*z = -old_y * sin(PI / 180 * f->angle_x) + *z * cos(PI / 180 * f->angle_x);
+	*y = new_y;
 }
 
-void			rotate_y(t_fdf *f, int *x, int z)
+void			rotate_y(t_fdf *f, int *x, double *z)
 {
-	int		old_x;
-	int		old_z;
+	double		old_x;
+	double		new_x;
 
 	old_x = *x;
-	old_z = z;
-	*x = old_x * cos(PI / 180 * f->angle_y) + z * sin(PI / 180 * f->angle_y);
-	z = -old_x * sin(PI / 180 * f->angle_y) + z * cos(PI / 180 * f->angle_y);
+	new_x = old_x * cos(PI / 180 * f->angle_y) + *z * sin(PI / 180 * f->angle_y);
+	*z = -old_x * sin(PI / 180 * f->angle_y) + *z * cos(PI / 180 * f->angle_y);
+	*x = new_x;
 }
 
 void			rotate_z(t_fdf *f, int *x, int *y)
 {
-	int		old_x;
-	int		old_y;
+	double		old_x;
+	double		old_y;
+	double		new_x;
+	double		new_y;
 
 	old_x = *x;
 	old_y = *y;
-	*x = old_x * cos(PI / 180 * f->angle_z) - old_y * sin(PI / 180 * f->angle_z);
-	*y = old_x * sin(PI / 180 * f->angle_z) + old_y * cos(PI / 180 * f->angle_z);
+	new_x = old_x * cos(PI / 180 * f->angle_z) - old_y * sin(PI / 180 * f->angle_z);
+	new_y = old_x * sin(PI / 180 * f->angle_z) + old_y * cos(PI / 180 * f->angle_z);
+	*x = new_x;
+	*y = new_y;
 }
 
 void			rotate(t_fdf *f)
 {
 	int		y;
 	int		x;
-	int		tmp_z;
+	double	tmp_z;
 
 	y = 0;
 	while (y < f->h)
@@ -59,9 +63,9 @@ void			rotate(t_fdf *f)
 		{
 			f->map[y][x].x = (x - f->w / 2) * f->zoom;
 			f->map[y][x].y = (y - f->h / 2) * f->zoom;
-			tmp_z = f->map[y][x].z * f->zoom;
-			rotate_x(f, &f->map[y][x].y, tmp_z);
-			rotate_y(f, &f->map[y][x].x, tmp_z);
+			tmp_z = f->map[y][x].z * f->zoom * f->z_scale;
+			rotate_x(f, &f->map[y][x].y, &tmp_z);
+			rotate_y(f, &f->map[y][x].x, &tmp_z);
 			rotate_z(f, &f->map[y][x].x, &f->map[y][x].y);
 			f->map[y][x].x += f->x0;
 			f->map[y][x].y += f->y0;

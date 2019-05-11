@@ -32,20 +32,10 @@ t_fdf			*init_fdf(void)
 	f->angle_x = 0;
 	f->angle_y = 0;
 	f->angle_z = 0;
+	f->z_scale = 1;
 	f->mlx = NULL;
 	f->win = NULL;
 	return (f);
-}
-
-void			reset_fdf(t_fdf *f)
-{
-	
-	if (f->w > f->h)
-		f->zoom = WIN_W / 2 / (f->w - 1);
-	else
-		f->zoom = WIN_H / 2 / (f->h - 1);
-	if (f->zoom < 1)
-		f->zoom = 1;
 }
 
 void			fdf(t_fdf *f)
@@ -97,8 +87,7 @@ int				main(int ac, char const *av[])
 		fdf_error("ERROR: invalid map.");
 	ft_memdel((void **)&file);
 //			print_map(f);		///
-	reset_fdf(f);
-//	default_view(f);
+	reset_view(f);
 	run_mlx(f);
 
 		printf("\n#################################################\n");		///
