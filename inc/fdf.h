@@ -52,6 +52,10 @@ typedef struct			s_line
 	int					xi;
 	int					yi;
 	int					d;
+	int					s;
+	int					e;
+	int					s_color;
+	int					e_color;
 }						t_line;
 
 /*
@@ -75,6 +79,7 @@ typedef struct			s_fdf
 	double				z_scale;					
 	int					max_z;
 	int					min_z;
+	int					colors[2];
 
 	int				bpp;		//
 	int				ln_size;	//
@@ -101,17 +106,24 @@ int				zoom(int key, t_fdf *f);
 int				rotate_controls(int key, t_fdf *f);
 int				z_scale(int key, t_fdf *f);
 
-void			put_pixel(t_fdf *f, int x, int y, int color);
+void			put_pixel(t_fdf *f, struct s_line ln);
 void			draw_grid(t_fdf *f);
 void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e);
-void			line_low(t_fdf *f, struct s_dots s, struct s_dots e);
-void			line_high(t_fdf *f, struct s_dots s, struct s_dots e);
+void			line_low(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l);
+void			line_high(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l);
 
 void			view(t_fdf *f);
 void			rotate(t_fdf *f);
 void			rotate_x(t_fdf *f, int *y, double *z);
 void			rotate_y(t_fdf *f, int *x, double *z);
 void			rotate_z(t_fdf *f, int *x, int *y);
+
+void			dots_color(t_fdf *f);
+int				get_dots_color(t_fdf *f, int z);
+int				get_pixel_color(struct s_line ln);
+double			ratio(int cur, int low, int high);
+int				light_my_fire(int low, int high, double rat);
+
 
 int				exit_fdf(t_fdf *f);
 void			fdf_error(char *msg);

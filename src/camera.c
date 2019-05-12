@@ -34,7 +34,7 @@ void			view(t_fdf *f)
 	}
 	else if (f->view == 1)
 	{
-		f->angle_x = -45;
+		f->angle_x = 0;
 		f->angle_y = 0;
 		f->angle_z = 0;
 	}

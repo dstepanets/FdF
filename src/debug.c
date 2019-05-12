@@ -22,7 +22,8 @@ void			print_map(t_fdf *f)
 		x = 0;
 		while (x < f->w)
 		{
-			printf("%d.%d.%d |", f->map[y][x].y, f->map[y][x].x, f->map[y][x].z);
+//			printf("%d.%d.%d |", f->map[y][x].y, f->map[y][x].x, f->map[y][x].z);
+			printf("%x |", f->map[y][x].color);
 			x++;
 		}
 		printf("\n");

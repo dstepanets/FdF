@@ -12,24 +12,19 @@
 
 #include "../inc/fdf.h"
 
-//void			put_pixel(t_fdf *f, int x, int y, int z)
-
-void			put_pixel(t_fdf *f, int x, int y, int color)
+void			put_pixel(t_fdf *f, struct s_line ln)
 {
 	int		i;
 
-	if (x > 0 && x < WIN_W && y > 0 && y < WIN_H)
+	if (ln.x > 0 && ln.x < WIN_W && ln.y > 0 && ln.y < WIN_H)
 	{
-		i = y * WIN_W + x;
-//		f->imarr[i] = get_color(f);
-		f->imarr[i] = color;
+		i = ln.y * WIN_W + ln.x;
+		f->imarr[i] = get_pixel_color(ln);
 	}
 }
 
-void			line_low(t_fdf *f, struct s_dots s, struct s_dots e)
+void			line_low(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
 {
-	struct s_line		l;
-
 	l.dx = e.x - s.x;
 	l.dy = e.y - s.y;
 	l.yi = 1;
@@ -43,7 +38,7 @@ void			line_low(t_fdf *f, struct s_dots s, struct s_dots e)
 	l.x = s.x;
 	while (l.x <= e.x)
 	{
-		put_pixel(f, l.x, l.y, GREEN);
+		put_pixel(f, l);
 		if (l.d > 0)
 		{
 			l.y = l.y + l.yi;
@@ -54,10 +49,8 @@ void			line_low(t_fdf *f, struct s_dots s, struct s_dots e)
 	}
 }
 
-void			line_high(t_fdf *f, struct s_dots s, struct s_dots e)
+void			line_high(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
 {
-	struct s_line		l;
-
 	l.dx = e.x - s.x;
 	l.dy = e.y - s.y;
 	l.xi = 1;
@@ -71,7 +64,7 @@ void			line_high(t_fdf *f, struct s_dots s, struct s_dots e)
 	l.y = s.y;
 	while (l.y <= e.y)
 	{
-		put_pixel(f, l.x, l.y, GREEN);
+		put_pixel(f, l);
 		if (l.d > 0)
 		{
 			l.x += l.xi;
@@ -84,10 +77,22 @@ void			line_high(t_fdf *f, struct s_dots s, struct s_dots e)
 
 void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e)
 {
+	struct s_line		l;
+
+	l.s_color = s.color;
+	l.e_color = e.color;
 	if (abs(e.x - s.x) > abs(e.y - s.y))
-		(s.x > e.x) ? line_low(f, e, s) : line_low(f, s, e);
+	{
+		l.s = s.x;
+		l.e = e.x;
+		(s.x > e.x) ? line_low(f, e, s, l) : line_low(f, s, e, l);
+	}
 	else
-		(s.y > e.y) ? line_high(f, e, s) : line_high(f, s, e);
+	{
+		l.s = s.y;
+		l.e = e.y;
+		(s.y > e.y) ? line_high(f, e, s, l) : line_high(f, s, e, l);
+	}
 }
 
 void			draw_grid(t_fdf *f)
