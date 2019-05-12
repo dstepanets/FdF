@@ -21,7 +21,7 @@ int				key_press(int key, t_fdf *f)
 		reset_view(f);
 		fdf(f);
 	}
-	else if (key == 18 || key == 19)
+	else if (key == 34 || key == 35)
 		switch_view(key, f);
 	else if (key == 126 || key == 125 || key == 123 || key == 124)
 		scroll(key, f);
@@ -31,14 +31,16 @@ int				key_press(int key, t_fdf *f)
 		rotate_controls(key, f);
 	else if (key == 116 || key == 121)
 		z_scale(key, f);
+	else if (key == 18 || key == 19 || key == 20 || key == 21 || key == 23)
+		color_mode(key, f);
 	return (0);
 }
 
 int				switch_view(int key, t_fdf *f)
 {
-	if (key == 18)
+	if (key == 34)
 		f->view = 0;
-	else if (key == 19)
+	else if (key == 35)
 		f->view = 1;
 	fdf(f);
 	return (0);
@@ -93,6 +95,37 @@ int				z_scale(int key, t_fdf *f)
 		f->z_scale -= 0.1;
 	else if (key == 116 && f->z_scale < 10.0)
 		f->z_scale += 0.1;
+	fdf(f);
+	return (0);
+}
+
+int				color_mode(int key, t_fdf *f)
+{
+	if (key == 18)
+	{
+		f->colors[0] = NAVY;
+		f->colors[1] = RED;
+	}
+	else if (key == 19)
+	{
+		f->colors[0] = DARK_GRAY;
+		f->colors[1] = WHITE;
+	}
+	else if (key == 20)
+	{
+		f->colors[0] = MAROON;
+		f->colors[1] = YELLOW;
+	}
+	else if (key == 21)
+	{
+		f->colors[0] = SKY;
+		f->colors[1] = GINGER;
+	}
+	else if (key == 23)
+	{
+		f->colors[0] = SAPPHIRE;
+		f->colors[1] = AQUA;
+	}
 	fdf(f);
 	return (0);
 }

@@ -17,7 +17,7 @@ int				get_pixel_color(struct s_line ln)
 	int			rgb[3];
 	double 		rat;
 
-	rat = (ln.dx >= ln.dy) ? ratio(ln.x, ln.s, ln.e) : ratio(ln.y, ln.s, ln.e);
+	rat = (ln.dx > ln.dy) ? ratio(ln.x, ln.s, ln.e) : ratio(ln.y, ln.s, ln.e);
 	rgb[0] = light_my_fire((ln.s_color >> 16) & 0xFF, (ln.e_color >> 16) & 0xFF, rat);
 	rgb[1] = light_my_fire((ln.s_color >> 8) & 0xFF, (ln.e_color >> 8) & 0xFF, rat);
 	rgb[2] = light_my_fire(ln.s_color & 0xFF, ln.e_color & 0xFF, rat);
@@ -34,12 +34,16 @@ int				light_my_fire(int low, int high, double rat)
 
 double			ratio(int cur, int low, int high)
 {
+	double		rat;
 	double		range;
 	double		position;
 
 	range = high - low;
 	position = cur - low;
-	return ((range == 0) ? 1.0 : (position / range));
+	rat = (range == 0) ? 1.0 : (position / range);
+	if (rat < 0.0)
+		rat = 0.0;
+	return (rat);
 }
 
 int				get_dots_color(t_fdf *f, int z)

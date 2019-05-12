@@ -22,16 +22,15 @@
 # define WIN_H 		1024
 
 # define WHITE		0xFFFFFF
-# define BLACK		0x000000
 # define DARK_GRAY	0x101010
-# define GRAY		0x424242
 # define RED		0xFF0000
 # define MAROON		0x800000	
-# define GREEN		0x008000
-# define LIME		0x00FF00
-# define BLUE		0x0000FF
-# define NAVY		0x000080
 # define YELLOW		0xFFFF00
+# define GINGER		0xEF8E38
+# define NAVY		0x000080
+# define SKY		0x108DC7
+# define SAPPHIRE	0x002661
+# define AQUA		0x92FFC0
 
 # define PI			3.1416
 
@@ -59,7 +58,7 @@ typedef struct			s_line
 }						t_line;
 
 /*
-** VIEW: 0 - default, 1 - iso, 2 - rotation;
+** VIEW: 0 - iso, 1 - parallel
 */
 
 typedef struct			s_fdf
@@ -105,6 +104,7 @@ int				scroll(int key, t_fdf *f);
 int				zoom(int key, t_fdf *f);
 int				rotate_controls(int key, t_fdf *f);
 int				z_scale(int key, t_fdf *f);
+int				color_mode(int key, t_fdf *f);
 
 void			put_pixel(t_fdf *f, struct s_line ln);
 void			draw_grid(t_fdf *f);

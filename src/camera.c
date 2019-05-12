@@ -22,10 +22,13 @@ void			reset_view(t_fdf *f)
 		f->zoom = 1;
 	f->z_scale = 1.0;
 	f->view = 0;
+	f->colors[0] = NAVY;
+	f->colors[1] = RED;	
 }
 
 void			view(t_fdf *f)
 {
+	dots_color(f);
 	if (f->view == 0)
 	{
 		f->angle_x = -30;
@@ -39,7 +42,6 @@ void			view(t_fdf *f)
 		f->angle_z = 0;
 	}
 	rotate(f);
-
 }
 /*
 

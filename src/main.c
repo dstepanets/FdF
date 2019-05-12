@@ -33,7 +33,7 @@ t_fdf			*init_fdf(void)
 	f->z_scale = 1;
 	f->max_z = 0;
 	f->min_z = 0;
-	f->colors[0] = BLUE;
+	f->colors[0] = NAVY;
 	f->colors[1] = RED;	
 	f->mlx = NULL;
 	f->win = NULL;
@@ -56,7 +56,8 @@ void			run_mlx(t_fdf *f)
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
 	f->img = mlx_new_image(f->mlx, WIN_W, WIN_H);
 	f->imarr = (int *)mlx_get_data_addr(f->img, &f->bpp, &f->ln_size, &f->endian);
-//		reset_fdf(f);
+	reset_view(f);
+		
 		fdf(f);
 
 	mlx_hook(f->win, 2, 0, key_press, f);
@@ -88,9 +89,7 @@ int				main(int ac, char const *av[])
 	if (!map_z(f, file))
 		fdf_error("ERROR: invalid map.");
 	ft_memdel((void **)&file);
-	dots_color(f);
 //			print_map(f);		///
-	reset_view(f);
 	run_mlx(f);
 
 		printf("\n#################################################\n");		///
