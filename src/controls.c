@@ -21,8 +21,8 @@ int				key_press(int key, t_fdf *f)
 		reset_view(f);
 		fdf(f);
 	}
-	else if (key == 34 || key == 35)
-		switch_view(key, f);
+	else if (key == 36 || key == 76 || key == 51)
+		switch_view(f, key);
 	else if (key == 126 || key == 125 || key == 123 || key == 124)
 		scroll(key, f);
 	else if (key == 27 || key == 78 || key == 24 || key == 69)
@@ -33,15 +33,22 @@ int				key_press(int key, t_fdf *f)
 		z_scale(key, f);
 	else if (key == 18 || key == 19 || key == 20 || key == 21 || key == 23)
 		color_mode(key, f);
+	else if (key == 48)
+	{
+		f->controls = (f->controls == on) ? off : on;
+		fdf(f);
+	}
 	return (0);
 }
 
-int				switch_view(int key, t_fdf *f)
+int				switch_view(t_fdf *f, int key)
 {
-	if (key == 34)
-		f->view = 0;
-	else if (key == 35)
+	if (key == 51)
+		f->view = (f->view == 5) ? 2 : 5;
+	else if (f->view == 0 || f->view == 2)
 		f->view = 1;
+	else
+		f->view = 0;
 	fdf(f);
 	return (0);
 }
@@ -84,7 +91,10 @@ int				rotate_controls(int key, t_fdf *f)
 		f->angle_z += 2;
 	else if (key == 12)
 		f->angle_z -= 2;
-	f->view = 3;
+	if (f->view == 0)
+		f->view = 2;
+	else if (f->view == 1)
+		f->view = 3;
 	fdf(f);
 	return (0);
 }

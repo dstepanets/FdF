@@ -23,18 +23,9 @@ t_fdf			*init_fdf(void)
 	f->map = NULL;
 	f->img = NULL;
 	f->imarr = NULL;
-	f->x0 = WIN_W / 2;
-	f->y0 = WIN_H / 2;
-	f->view = 0;
-	f->zoom = 1.0;
-	f->angle_x = 0;
-	f->angle_y = 0;
-	f->angle_z = 0;
-	f->z_scale = 1;
 	f->max_z = 0;
 	f->min_z = 0;
-	f->colors[0] = NAVY;
-	f->colors[1] = RED;	
+	f->controls = on;
 	f->mlx = NULL;
 	f->win = NULL;
 	return (f);
@@ -48,20 +39,25 @@ void			fdf(t_fdf *f)
 	view(f);
 	draw_grid(f);
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
+	if (f->controls == on)
+		display_controls(f);
 }
 
 void			run_mlx(t_fdf *f)
 {
+	int		t[3];
+
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIN_W, WIN_H, "FdF");
 	f->img = mlx_new_image(f->mlx, WIN_W, WIN_H);
-	f->imarr = (int *)mlx_get_data_addr(f->img, &f->bpp, &f->ln_size, &f->endian);
+	f->imarr = (int *)mlx_get_data_addr(f->img, &t[0], &t[1], &t[2]);
 	reset_view(f);
 		
 		fdf(f);
 
 	mlx_hook(f->win, 2, 0, key_press, f);
 	mlx_hook(f->win, 17, 0, exit_fdf, f);
+	mlx_loop_hook(f->mlx, rotation_mode, f);
 	mlx_loop(f->mlx);
 }
 
@@ -86,7 +82,7 @@ int				main(int ac, char const *av[])
 		fdf_error("ERROR: invalid map.");
 	if (!create_map(f))
 		fdf_error("ERROR on map creation.");
-	if (!map_z(f, file))
+	if (!validate(f, file))
 		fdf_error("ERROR: invalid map.");
 	ft_memdel((void **)&file);
 //			print_map(f);		///

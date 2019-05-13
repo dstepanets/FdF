@@ -22,6 +22,7 @@
 # define WIN_H 		1024
 
 # define WHITE		0xFFFFFF
+# define BEIGE		0xF5F5DC
 # define DARK_GRAY	0x101010
 # define RED		0xFF0000
 # define MAROON		0x800000	
@@ -58,7 +59,7 @@ typedef struct			s_line
 }						t_line;
 
 /*
-** VIEW: 0 - iso, 1 - parallel
+** VIEW: 0 - iso, 1 - parallel, 5 - auto-rotation
 */
 
 typedef struct			s_fdf
@@ -79,10 +80,7 @@ typedef struct			s_fdf
 	int					max_z;
 	int					min_z;
 	int					colors[2];
-
-	int				bpp;		//
-	int				ln_size;	//
-	int				endian;		//
+	enum {on, off}		controls;
 	void				*mlx;
 	void				*win;
 }						t_fdf;
@@ -92,19 +90,28 @@ char			*read_file(const char *av);
 int				get_map_height(char		*file);
 int				get_map_width(char		*file);
 int				create_map(t_fdf *f);
-int				map_z(t_fdf *f, char *file);
+int				validate(t_fdf *f, char *file);
+int				map_z(t_fdf *f, int *ixy, char *file);
 
 void			run_mlx(t_fdf *f);
 void			fdf(t_fdf *f);
 void			reset_view(t_fdf *f);
 
 int				key_press(int key, t_fdf *f);
-int				switch_view(int key, t_fdf *f);
+int				switch_view(t_fdf *f, int key);
 int				scroll(int key, t_fdf *f);
 int				zoom(int key, t_fdf *f);
 int				rotate_controls(int key, t_fdf *f);
 int				z_scale(int key, t_fdf *f);
 int				color_mode(int key, t_fdf *f);
+
+void			view(t_fdf *f);
+void			rotate(t_fdf *f);
+void			rotate_x(t_fdf *f, int *y, double *z);
+void			rotate_y(t_fdf *f, int *x, double *z);
+void			rotate_z(t_fdf *f, int *x, int *y);
+void			display_controls(t_fdf *f);
+int				rotation_mode(t_fdf *f);
 
 void			put_pixel(t_fdf *f, struct s_line ln);
 void			draw_grid(t_fdf *f);
@@ -112,18 +119,11 @@ void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e);
 void			line_low(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l);
 void			line_high(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l);
 
-void			view(t_fdf *f);
-void			rotate(t_fdf *f);
-void			rotate_x(t_fdf *f, int *y, double *z);
-void			rotate_y(t_fdf *f, int *x, double *z);
-void			rotate_z(t_fdf *f, int *x, int *y);
-
 void			dots_color(t_fdf *f);
 int				get_dots_color(t_fdf *f, int z);
 int				get_pixel_color(struct s_line ln);
 double			ratio(int cur, int low, int high);
 int				light_my_fire(int low, int high, double rat);
-
 
 int				exit_fdf(t_fdf *f);
 void			fdf_error(char *msg);

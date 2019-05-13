@@ -12,42 +12,63 @@
 
 #include "../inc/fdf.h"
 
-int				map_z(t_fdf *f, char *file)
+int				is_hex(char *file, int i)
 {
-	int		i;
-	int		x;
-	int		y;
+	int		j;
 
-	i = 0;
-	y = 0;
-	x = 0;
-	while (file[i])
+	i += 2;
+	j = 0;
+	while (j < 6)
 	{
-		if (file[i] == '-' || ft_isdigit(file[i]))
-		{
-			f->map[y][x].z = ft_atoi(&file[i]);
-			if (f->map[y][x].z > f->max_z)
-				f->max_z = f->map[y][x].z;
-			else if (f->map[y][x].z < f->min_z)
-				f->min_z = f->map[y][x].z;
-			x++;
-			if (x > f->w)
-				return (0);
-			while (file[i] && (file[i] == '-' || ft_isdigit(file[i])))
-				i++;
-		}
-		if (!file[i] || file[i] == '\n')
-		{
-//				printf("y: %d, x: %d\n", y, x);	///
-			if (x != f->w)
-				return (0);
-			y++;
-			x = 0;
-		}
-		if (file[i])
-			i++;
+		if (!((file[i] >= '0' && file[i] <= '9') ||
+			(file[i] >= 'A' && file[i] <= 'F') ||
+			(file[i] >= 'a' && file[i] <= 'f')))
+			return(0);
+		i++;
+		j++;
 	}
-	if (y != f->h)
+//		printf("i: %d\n || file[i]: %s\n", i, &file[i]);	///
+	return(1);
+}
+
+int			map_z(t_fdf *f, int *ixy, char *file)
+{
+	f->map[ixy[2]][ixy[1]].z = ft_atoi(&file[ixy[0]]);
+	if (f->map[ixy[2]][ixy[1]].z > f->max_z)
+		f->max_z = f->map[ixy[2]][ixy[1]].z;
+	else if (f->map[ixy[2]][ixy[1]].z < f->min_z)
+		f->min_z = f->map[ixy[2]][ixy[1]].z;
+	ixy[1]++;
+	if (ixy[1] > f->w)
+		return (0);
+	while (file[ixy[0]] && (file[ixy[0]] == '-' || ft_isdigit(file[ixy[0]])))
+		ixy[0]++;
+	return (1);
+}
+
+int				validate(t_fdf *f, char *file)
+{
+	static int		ixy[3] = {0, 0, 0};
+
+	while (file[ixy[0]])
+	{
+		if (file[ixy[0]] == '0' && file[ixy[0] + 1] == 'x')
+			(is_hex(file, ixy[0])) ? ixy[0] += 8 : 0;
+		if (file[ixy[0]] == '-' || ft_isdigit(file[ixy[0]]))
+		{
+			if (!map_z(f, ixy, file))
+				return (0);
+		}
+		if (!file[ixy[0]] || file[ixy[0]] == '\n')
+		{
+			if (ixy[1] != f->w)
+				return (0);
+			ixy[2]++;
+			ixy[1] = 0;
+		}
+		(file[ixy[0]]) ? ixy[0]++ : 0;
+	}
+	if (ixy[2] != f->h)
 		return (0);
 	return (1);
 }
@@ -78,6 +99,8 @@ int				get_map_width(char		*file)
 	i = 0;
 	while (file[i])
 	{
+		if (file[i] == '0' && file[i + 1] == 'x')
+			(is_hex(file, i)) ? i += 8 : 0;
 		if (ft_isdigit(file[i]))
 		{
 			w++;

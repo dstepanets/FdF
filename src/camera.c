@@ -12,8 +12,23 @@
 
 #include "../inc/fdf.h"
 
+int			rotation_mode(t_fdf *f)
+{
+	if (f->view == 5)
+	{
+		f->angle_x = -45;
+		f->angle_z = 0;
+		f->angle_y++;
+		usleep(20000);
+		fdf(f);
+	}
+	return (0);
+}
+
 void			reset_view(t_fdf *f)
 {
+	f->x0 = WIN_W / 2;
+	f->y0 = WIN_H / 2;
 	if (f->w > f->h)
 		f->zoom = WIN_W / 2 / (f->w - 1);
 	else
@@ -23,7 +38,7 @@ void			reset_view(t_fdf *f)
 	f->z_scale = 1.0;
 	f->view = 0;
 	f->colors[0] = NAVY;
-	f->colors[1] = RED;	
+	f->colors[1] = RED;
 }
 
 void			view(t_fdf *f)
@@ -43,12 +58,3 @@ void			view(t_fdf *f)
 	}
 	rotate(f);
 }
-/*
-
-	if (f->view == 0)
-		default_view(f);
-	else if (f->view == 1)
-		to_isometric(f);
-	else
-		rotate(f);
-*/

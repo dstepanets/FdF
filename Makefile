@@ -27,6 +27,7 @@ SRC 		=	main.c \
 				read.c \
 				draw.c \
 				controls.c \
+				controls2.c \
 				camera.c \
 				rotation.c \
 				colors.c \
