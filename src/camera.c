@@ -30,9 +30,9 @@ void			reset_view(t_fdf *f)
 	f->x0 = WIN_W / 2;
 	f->y0 = WIN_H / 2;
 	if (f->w > f->h)
-		f->zoom = WIN_W / 2 / (f->w - 1);
+		f->zoom = WIN_W / 2 / f->w;
 	else
-		f->zoom = WIN_H / 2 / (f->h - 1);
+		f->zoom = WIN_H / 2 / f->h;
 	if (f->zoom < 1)
 		f->zoom = 1;
 	f->z_scale = 1.0;

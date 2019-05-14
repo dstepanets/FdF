@@ -29,7 +29,7 @@ void			fdf_error(char *msg)
 	ft_printf("{red}{b}%s{0}\n", msg);
 		printf("\n#################################################\n");		///
 		system("leaks -q fdf");		///
-	exit(0);
+	exit(1);
 }
 
 void			del_map(t_fdf *f)
