@@ -16,7 +16,7 @@ t_fdf			*init_fdf(void)
 {
 	t_fdf	*f;
 
-	if(!(f = (t_fdf *)malloc(sizeof(t_fdf))))
+	if (!(f = (t_fdf *)malloc(sizeof(t_fdf))))
 		return (NULL);
 	f->h = 0;
 	f->w = 0;
@@ -35,7 +35,6 @@ void			fdf(t_fdf *f)
 {
 	ft_bzero(f->imarr, WIN_W * WIN_H * sizeof(int));
 	mlx_clear_window(f->mlx, f->win);
-
 	view(f);
 	draw_grid(f);
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
@@ -52,9 +51,7 @@ void			run_mlx(t_fdf *f)
 	f->img = mlx_new_image(f->mlx, WIN_W, WIN_H);
 	f->imarr = (int *)mlx_get_data_addr(f->img, &t[0], &t[1], &t[2]);
 	reset_view(f);
-		
-		fdf(f);
-
+	fdf(f);
 	mlx_hook(f->win, 2, 0, key_press, f);
 	mlx_hook(f->win, 17, 0, exit_fdf, f);
 	mlx_loop_hook(f->mlx, rotation_mode, f);
@@ -73,11 +70,8 @@ int				main(int ac, char const *av[])
 	}
 	f = init_fdf();
 	file = read_file(av[1]);
-		printf("file:\n%s\n", file);	///
 	f->h = get_map_height(file);
-		printf("map_h: %d\n", f->h);	///
 	f->w = get_map_width(file);
-		printf("map_w: %d\n", f->w);	///
 	if (!f->h || !f->w)
 		fdf_error("ERROR: invalid map.");
 	if (!create_map(f))
@@ -85,10 +79,6 @@ int				main(int ac, char const *av[])
 	if (!validate(f, file))
 		fdf_error("ERROR: invalid map.");
 	ft_memdel((void **)&file);
-//			print_map(f);		///
 	run_mlx(f);
-
-		printf("\n#################################################\n");		///
-		system("leaks -q fdf");		///
 	return (0);
 }

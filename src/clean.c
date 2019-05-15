@@ -18,21 +18,17 @@ int			exit_fdf(t_fdf *f)
 	mlx_destroy_window(f->mlx, f->win);
 	mlx_destroy_image(f->mlx, f->img);
 	free(f);
-		printf("\n#################################################\n");		///
-		system("leaks -q fdf");		///
 	exit(0);
 	return (0);
 }
 
-void			fdf_error(char *msg)
+void		fdf_error(char *msg)
 {
 	ft_printf("{red}{b}%s{0}\n", msg);
-		printf("\n#################################################\n");		///
-		system("leaks -q fdf");		///
 	exit(1);
 }
 
-void			del_map(t_fdf *f)
+void		del_map(t_fdf *f)
 {
 	int		y;
 

@@ -25,11 +25,12 @@ MLX_PATH	= -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 SRC 		=	main.c \
 				read.c \
+				validate.c \
 				draw.c \
 				controls.c \
 				controls2.c \
 				camera.c \
-				rotation.c \
+				projection.c \
 				colors.c \
 				clean.c \
 				debug.c 			#####del

@@ -12,7 +12,7 @@
 
 #include "../inc/fdf.h"
 
-int			rotation_mode(t_fdf *f)
+int				rotation_mode(t_fdf *f)
 {
 	if (f->view == 5)
 	{
@@ -56,5 +56,5 @@ void			view(t_fdf *f)
 		f->angle_y = 0;
 		f->angle_z = 0;
 	}
-	rotate(f);
+	projection(f);
 }

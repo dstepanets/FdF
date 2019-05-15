@@ -12,7 +12,7 @@
 
 #include "../inc/fdf.h"
 
-void			put_pixel(t_fdf *f, struct s_line ln)
+void	put_pixel(t_fdf *f, struct s_line ln)
 {
 	int		i;
 
@@ -23,7 +23,7 @@ void			put_pixel(t_fdf *f, struct s_line ln)
 	}
 }
 
-void			line_low(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
+void	line_low(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
 {
 	l.dx = e.x - s.x;
 	l.dy = e.y - s.y;
@@ -49,7 +49,7 @@ void			line_low(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
 	}
 }
 
-void			line_high(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
+void	line_high(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
 {
 	l.dx = e.x - s.x;
 	l.dy = e.y - s.y;
@@ -75,7 +75,7 @@ void			line_high(t_fdf *f, struct s_dots s, struct s_dots e, struct s_line l)
 	}
 }
 
-void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e)
+void	draw_line(t_fdf *f, struct s_dots s, struct s_dots e)
 {
 	struct s_line		l;
 
@@ -95,7 +95,7 @@ void			draw_line(t_fdf *f, struct s_dots s, struct s_dots e)
 	}
 }
 
-void			draw_grid(t_fdf *f)
+void	draw_grid(t_fdf *f)
 {
 	int		y;
 	int		x;
