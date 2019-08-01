@@ -9,6 +9,3 @@
 # Precompiled Headers
 *.gch
 *.pch
-
-# Libraries
-*.a
