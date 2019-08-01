@@ -8,7 +8,7 @@
 
 *This is the first project in the graphics branch of School 42 curriculum.*
 
-**Detailed description of a task is in [fdf.en.pdf](https://github.com/dstepanets/FdF/blob/master/fdf.en.pdf)**
+**Detailed description of the task is in [fdf.en.pdf](https://github.com/dstepanets/FdF/blob/master/fdf.en.pdf)**
 
 ## Usage
 
@@ -16,9 +16,9 @@ Compile with `make`. Then run:
 
 `./fdf [map.fdf]`
 
-There is the maps directory with examples.
+There is a *maps* directory with examples.
 
-*Tested only on Mac OS X.*
+**Tested only on Mac OS X.**
 
 ## Features
 
