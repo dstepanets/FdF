@@ -16,7 +16,7 @@ Compile with `make`. Then run:
 
 `./fdf [map.fdf]`
 
-There is a *maps* directory with examples.
+Use files in the *maps* directory.
 
 **Tested only on Mac OS X.**
 
