@@ -4,7 +4,7 @@
 
 ## Description
 
-3D graphics program. Draws a wireframe model of a relief landscape. Takes as input a map in form of a text document where space separated integers represent vertices of a model. The integer's position defines Y and X coordinate, and its value is for Z coordinate.
+3D graphics program. Draws a wireframe model of a relief landscape. Takes as input a map in the form of a text document where space-separated integers represent vertices of a model. The integer's position defines Y and X coordinate, and its value is for Z coordinate.
 
 *This is the first project in the graphics branch of School 42 curriculum.*
 
